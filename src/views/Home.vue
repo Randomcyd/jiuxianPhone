@@ -340,7 +340,7 @@
                 </div>
     </div>
     <div class="item-wrap">
-      <div class="item-box" v-for="item in itemList" :key="item.commonProductInfo.pid">
+      <div class="item-box" v-for="item in itemList" :key="item.commonProductInfo.pid" @click="toItemAction(item.commonProductInfo.pid)">
         <div class="tag-group">
           <span v-for="(type,index) in item.promo" :key="index" :style="{background:type.backColor}">{{type.name}}</span>
         </div>
@@ -406,7 +406,12 @@ export default {
         })
         .then((res) => {
           this.itemList = res.data.promoList;
-          console.log(this.itemList);
+        });
+    },
+    toItemAction(id){
+      this.$router.push({
+          path: '/item',
+          query: {pid: id}
         });
     },
     init() {
