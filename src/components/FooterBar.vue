@@ -2,10 +2,10 @@
     <div id="footer">
             <ul>
                 <li><a href="#"><img src="https://img08.jiuxian.com/bill/2016/0224/cccd8df26a754c139de800406af82178.png" alt="#"></a></li>
-                <li><a><img src="https://img07.jiuxian.com/bill/2016/0224/36a49b28ec5e4cdf9dbe37988199487d.png" alt="#"></a></li>
+                <li @click="toType()"><a><img src="https://img07.jiuxian.com/bill/2016/0224/36a49b28ec5e4cdf9dbe37988199487d.png" alt="#"></a></li>
                 <li><a><img src="https://img09.jiuxian.com/bill/2018/0528/56760d41e3e745afa14e3cea1713631c.png" alt="#"></a></li>
                 <li @click="toCart()"><a><img src="https://img08.jiuxian.com/bill/2016/0224/42baf46987b6460bb43b3396e9941653.png" alt="#"></a></li>
-                <li><a><img src="https://img09.jiuxian.com/bill/2016/0224/cba9029a8f4444a989a2ab5aa84c6538.png" alt="#"></a></li>
+                <li @click="toLogin()"><a><img src="https://img09.jiuxian.com/bill/2016/0224/cba9029a8f4444a989a2ab5aa84c6538.png" alt="#"></a></li>
             </ul>
         </div>
 </template>
@@ -15,6 +15,12 @@ export default {
     methods:{
         toCart(){
             this.$router.push('/cart');
+        },
+        toType(){
+            this.$router.push('/type');
+        },
+        toLogin(){
+            this.$router.push('/login');
         }
     }
 }

@@ -1,6 +1,14 @@
 <template>
   <div id="home">
     <download-app></download-app>
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <div class="search-wrap">
+      <div class="topSearch">
+        <van-icon name="search" size="20" />
+        <input type="text" placeholder="人头马大牌日  领券满399减50" v-model="searchValue" @click="toSearch()">
+      </div>
+    </div>
     <footer-bar></footer-bar>
     <swiper></swiper>
     <div class="nav">
@@ -93,8 +101,9 @@
         indicator-color="white"
         :width="110"
         :loop="false"
+        :show-indicators="false"
       >
-        <van-swipe-item v-for="item in crossItemList" :key="item.proId">
+        <van-swipe-item v-for="item in crossItemList" :key="item.proId" @click="toItemAction(item.proId)">
           <img :src="item.proImg" alt="" />
           <span class="item-name">{{ item.proName }}</span>
           <span class="item-price">{{ "￥" + item.proPrice }}</span>
@@ -141,6 +150,7 @@
         indicator-color="white"
         :width="150"
         :loop="false"
+        :show-indicators="false"
       >
         <van-swipe-item
           ><img
@@ -233,7 +243,7 @@
                       </div>
        </div>
       <div class="brand">
-                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white">
+                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white" :show-indicators="false">
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
@@ -260,7 +270,7 @@
                       </div>
        </div>
       <div class="brand">
-                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white">
+                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white" :show-indicators="false">
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
@@ -287,7 +297,7 @@
                       </div>
        </div>
       <div class="brand">
-                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white">
+                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white" :show-indicators="false">
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
@@ -314,7 +324,7 @@
                       </div>
        </div>
       <div class="brand">
-                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white">
+                    <van-swipe class="my-swipe" :width="60" :loop="false" indicator-color="white" :show-indicators="false">
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
                       <van-swipe-item><img src="https://img06.jiuxian.com/bill/2020/0720/8678c6eef4a5440ca3f95646cbea45b3.jpg" alt="#"></van-swipe-item>
@@ -340,16 +350,18 @@
                 </div>
     </div>
     <div class="item-wrap">
-      <div class="item-box" v-for="item in itemList" :key="item.commonProductInfo.pid" @click="toItemAction(item.commonProductInfo.pid)">
-        <div class="tag-group">
-          <span v-for="(type,index) in item.promo" :key="index" :style="{background:type.backColor}">{{type.name}}</span>
+        <div class="item-box" v-for="item in itemList" :key="item.commonProductInfo.pid" @click="toItemAction(item.commonProductInfo.pid)">
+          <div class="tag-group">
+            <span v-for="(type,index) in item.promo" :key="index" :style="{background:type.backColor}">{{type.name}}</span>
+          </div>
+          <img :src="item.commonProductInfo.imgPath" alt="">
+          <p class="item-name">{{item.commonProductInfo.pname}}</p>
+          <span class="item-price">{{"￥"+item.commonProductInfo.actPrice}}</span>
+          <del class="del-item-price">{{"￥"+item.commonProductInfo.jxPrice}}</del>
         </div>
-        <img :src="item.commonProductInfo.imgPath" alt="">
-        <p class="item-name">{{item.commonProductInfo.pname}}</p>
-        <span class="item-price">{{"￥"+item.commonProductInfo.actPrice}}</span>
-        <del class="del-item-price">{{"￥"+item.commonProductInfo.jxPrice}}</del>
-      </div>
     </div>
+    </van-list>
+    </van-pull-refresh>
     <div class="blank"></div>
   </div>
 </template>
@@ -357,7 +369,7 @@
 <script>
 // @ is an alias to /src
 import Vue from "vue";
-import { CountDown, Icon } from "vant";
+import { CountDown, Icon ,Toast } from "vant";
 Vue.use(Icon);
 Vue.use(CountDown);
 import "vant/lib/icon/local.css";
@@ -370,6 +382,12 @@ export default {
       time: null,
       crossItemList: [],
       itemList:[],
+      searchValue:'',
+      count: 0,
+      loading: false,
+      finished: false,
+      refreshing: false,
+      pageNum:1,
     };
   },
   name: "Home",
@@ -388,7 +406,7 @@ export default {
         .get("https://m.jiuxian.com/m_v1/promote/qgajax.do", {
           params: {
             t: 1630141351880,
-            pagenum: 1,
+            pagenum: this.pageNum,
             tabnum: 1,
           },
         })
@@ -401,18 +419,75 @@ export default {
         .get("https://m.jiuxian.com/m_v1/statics/getzx.htm", {
           params: {
             topicId: 1165,
-            pageNum: 1,
+            pageNum: this.pageNum,
           },
         })
         .then((res) => {
           this.itemList = res.data.promoList;
         });
     },
+    onLoad() {
+        setTimeout(()=>{
+          this.pageNum+=1;
+          this.refreshing = false;
+          this.axios
+          .get("https://m.jiuxian.com/m_v1/statics/getzx.htm", {
+            params: {
+              topicId: 1165,
+              pageNum: this.pageNum,
+            },
+        })
+        .then((res) => {
+          this.itemList =[...this.itemList,...res.data.promoList];
+        })
+        .catch(()=>{
+          this.finished = true;
+        });
+        this.loading = false;
+        },1000)
+        // if (this.refreshing) {
+        //   this.list = [];
+        //   this.refreshing = false;
+        // }
+
+        // for (let i = 0; i < 10; i++) {
+        //   this.list.push(this.list.length + 1);
+        // }
+        // this.loading = false;
+
+        // if (this.list.length >= 40) {
+        //   this.finished = true;
+        // }
+    },
+    onRefresh() {
+      // 清空列表数据
+      this.finished = false;
+
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true;
+      this.onLoad();
+    },
     toItemAction(id){
       this.$router.push({
           path: '/item',
           query: {pid: id}
         });
+    },
+    toSearch(){
+      this.$router.push('/type');
+    },
+    pageScroll(){
+      this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
+      if(this.scroll>=43){
+        document.querySelector(".search-wrap").style.position = "fixed";
+        document.querySelector(".search-wrap").style.top = 0;
+        document.querySelector(".search-wrap").style.background = "#e5383b";
+      }else{
+        document.querySelector(".search-wrap").style.position = "absolute";
+        document.querySelector(".search-wrap").style.top = "43px";
+        document.querySelector(".search-wrap").style.background = "none";
+      }
     },
     init() {
       this.getCrossItem();
@@ -423,11 +498,30 @@ export default {
   },
   mounted() {
     this.init();
+    // this.addEventListener('scroll', this.pageScroll)
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.search-wrap{
+  width: 100%; height: 35px; 
+  position: absolute; top: 0; z-index: 999; left: 0; right: 0;
+}
+.search-wrap-ex{
+  width: 100%; height: 35px; position: fixed; top: 0; z-index: 999; left: 0;
+  background: #e5383b;
+}
+.topSearch{
+  width: 94%; margin: 4px auto; border-radius: 4px;
+  height: 27px; line-height: 27px; background: #fff;
+  input{
+    border: 0; height: 26px; font-size: 12px;vertical-align: middle;
+  }
+  i{
+    vertical-align: middle; margin: 0 8px; opacity: .5;
+  }
+}
 .nav {
   width: 100%;
   display: flex;
@@ -530,7 +624,7 @@ export default {
 }
 .crossItem {
   width: 100%;
-  height: 170px;
+  height: 174px;
 
   .my-swipe {
     width: 100%;
@@ -696,7 +790,7 @@ export default {
   }
 }
 .item-wrap{
-  width: 100%; display: flex; justify-content: space-around; flex-wrap: wrap;
+  width: 100%;display: flex; justify-content: space-around; flex-wrap: wrap;
   .item-box{
     width: 49.5%; box-sizing: border-box; padding: 20px 10px 5px; border: 4px solid #eee; margin-top: 3px;
     position: relative;

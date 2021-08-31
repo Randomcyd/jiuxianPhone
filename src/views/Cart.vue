@@ -1,6 +1,12 @@
 <template>
     <div class="cart">
         <top-title>购物车</top-title>
+        <div class="noItem" v-if="itemTotal.length==0">
+            <van-icon name="cart" />
+            <h5>购物车还是空的</h5>
+            <p>快去逛逛吧~</p>
+            <a>促销活动</a>
+        </div>
         <div class="item-wrap">
             <div class="item-box" v-for="item,index in cart" :key="index">  
                 <div class="item-pic">
@@ -20,7 +26,8 @@
                 <van-icon name="delete" size="20" @click="deleteItem(index)"/>
             </div>
         </div>
-        <div class="payBar">
+        
+        <div class="payBar" v-if="itemTotal.length!=0">
             <div class="chooseAll">
                 <input type="checkbox" checked="checked">
                 <span>全选</span>
@@ -33,6 +40,7 @@
                 去结算({{cartNum}})
             </div>
         </div>
+        <div class="blank" v-if="itemTotal.length==0"></div>
     </div>
 </template>
 
@@ -92,7 +100,24 @@ export default {
 
 <style lang="scss" scoped>
     .cart{
-        width: 100%;
+        width: 100%; background: #eee;
+    }
+    .noItem{
+        width: 100%; position: absolute; z-index: 1000; top: 200px; text-align: center;
+        i{
+            font-size: 48px; color: #ddd; border: 4px solid #ddd; border-radius: 50%; padding: 10px;
+        }
+        h5{
+            line-height: 20px;font-size: 12px;color: #666; font-weight: normal; margin-top: 14px;
+        }
+        p{
+            color: #999;line-height: 20px;font-size: 12px;
+        }
+        a{
+            display: inline-block; margin-top: 14px; height: 24px;line-height: 24px;
+            border: 1px solid #ccc;background-color: #fff;padding: 0 10px;font-size: 12px;
+            width: 70px; border-radius: 5px;
+        }
     }
     .payBar{
         width: 100%; height: 50px; position: fixed;
@@ -164,5 +189,8 @@ export default {
                 position: relative; left: 0; border: 0; text-align: center; border: 1px solid #ddd;
             }
         }
+    }
+    .blank{
+        width: 100%; height: 51px; background: #eee; position: fixed; bottom: 0; left: 0;
     }
 </style>

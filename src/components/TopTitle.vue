@@ -6,10 +6,10 @@
             <a class="menu" @click="showMenuAction()">菜单</a>
         </div>
         <div class="pull-down-menu" v-show="menuSwitch">
-            <div class="down-menu-box">首页</div>
-            <div class="down-menu-box">搜索</div>
-            <div class="down-menu-box">购物车</div>
-            <div class="down-menu-box">我的酒仙</div>
+            <div class="down-menu-box" @click="toHome()">首页</div>
+            <div class="down-menu-box" @click="toSearch()">搜索</div>
+            <div class="down-menu-box" @click="toCart()">购物车</div>
+            <div class="down-menu-box" @click="toLogin()">我的酒仙</div>
         </div>
     </div>
 </template>
@@ -26,6 +26,18 @@ export default {
         },
         back(){
             this.$router.go(-1);
+        },
+        toHome(){
+            this.$router.push('/');
+        },
+        toSearch(){
+            this.$router.push('/type');
+        },
+        toCart(){
+            this.$router.push('/cart');
+        },
+        toLogin(){
+            this.$router.push('/login');
         }
     }
 }
