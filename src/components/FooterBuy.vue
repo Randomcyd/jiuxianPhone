@@ -1,8 +1,8 @@
 <template>
     <div class="footer-buy">
         <a class="customer-service"><van-icon name="friends" /><p>客服</p></a>
-        <a class="collect"><van-icon name="like" /><p>收藏</p></a>
-        <a class="cart" @click="toCart()"><van-icon name="cart" v-if="cartNum!=0" :badge="cartNum"/><van-icon v-if="cartNum==0" name="cart"/><p>购物车</p></a>
+        <a class="collect" @click="toCollect()"><van-icon name="like" :class='{collect_active:collect==true}' /><p>收藏</p></a>
+        <a class="cart" @click="toCart()"><van-icon name="cart" v-if="cartNum!=0" :badge="cartNum"  /><van-icon v-if="cartNum==0" name="cart"/><p>购物车</p></a>
         <a class="add-cart" @click="addCartAction()">加入购物车</a>
         <a class="buy" @click="toOrder()">立即购买</a>
     </div>
@@ -16,7 +16,8 @@ export default {
     data(){
         return{
             itemNum:'',
-            pid:''
+            pid:'',
+            collect:false,
         }
     },
     computed:Vuex.mapState(['cartNum']),
@@ -33,6 +34,9 @@ export default {
         },
         toCart(){
             this.$router.push('/cart');
+        },
+        toCollect(){
+            this.collect = !this.collect;
         },
         toOrder(){
             this.$router.push({
@@ -73,6 +77,9 @@ export default {
         }
         .buy{
             font-size: 14px;    background-color: #3c3f51; flex: 2;color: #fff;line-height:45px;padding-top:0px;
+        }
+        .collect_active{
+            color: #fc5a5a;
         }
     }
 </style>

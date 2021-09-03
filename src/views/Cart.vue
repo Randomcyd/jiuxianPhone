@@ -36,7 +36,7 @@
                 <p>合计：<b>￥{{totalPrice}}.00</b></p>
                 <span>优惠：￥0.00</span>
             </div>
-            <div class="toPay">
+            <div class="toPay" @click="toOrder()">
                 去结算({{cartNum}})
             </div>
         </div>
@@ -78,11 +78,19 @@ export default {
             this.itemTotal = arr;  
         },
         subTotal(index){
-            this.$store.state.cart[index].data.proTotal-=1;
+            if(this.$store.state.cart[index].data.proTotal<=1){
+                this.$store.state.cart[index].data.proTotal=1;
+            }else{
+                this.$store.state.cart[index].data.proTotal-=1;
+            } 
             this.getItemTotal();
         },
         addTotal(index){
-            this.$store.state.cart[index].data.proTotal+=1;
+            if(this.$store.state.cart[index].data.proTotal>=10){
+                this.$store.state.cart[index].data.proTotal=10;
+            }else{
+                this.$store.state.cart[index].data.proTotal+=1;
+            } 
             this.getItemTotal();
         },
         deleteItem(index){
@@ -92,6 +100,14 @@ export default {
         },
         toHome(){
             this.$router.push("/");
+        },
+        toOrder(){
+            this.$router.push({
+                path:'/cartorder',
+                query:{
+                    itemList:this.cart
+                }
+            });
         }
     },
     mounted(){

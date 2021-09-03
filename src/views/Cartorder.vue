@@ -10,18 +10,18 @@
                 <van-icon name="arrow" />
             </div>
             <div class="item-list">
-                <div class="item-box">  
+                <div class="item-box" v-for="item,index in itemList" :key="index">  
                 <div class="item-pic">
                     <img src="http://img09.jiuxian.com/2021/0726/9d73d6fee3144c789a84caadf8e0331d5.jpg" alt="">
                 </div>
                 <div class="item-info">
                     <h3>53°钓鱼台珍秘500ml</h3>
-                    <p>¥{{itemInfo.price}}.00</p>
+                    <p>¥{{item.data.productPromo.price}}.00</p>
                     <div class="item-num">
-                        x{{itemNum}}
+                        x{{item.data.proTotal}}
                     </div>
                 </div>
-            </div>
+                </div>
             </div>
             <div class="payInfo">
                 <div class="payWay">
@@ -80,7 +80,7 @@
                 <div class="payWay">
                     <p class="payTitle" style="float:left">商品金额</p>
                     <div class="payTab" style="float:right">
-                        <span style="color: #ff3333;">¥{{itemInfo.price}}.00</span>
+                        <span style="color: #ff3333;">¥{{totalPrice}}.00</span>
                     </div>
                 </div>
                 <div class="payWay">
@@ -91,8 +91,9 @@
                 </div>
             </div>
         </div>
+        <div class="blank"></div>
         <div class="footerBar">
-            <p>应付金额:<span>¥{{itemInfo.price+10}}.00</span></p>
+            <p>应付金额:<span>¥{{totalPrice+10}}.00</span></p>
             <a class="submit">提交订单</a>
         </div>
     </div>
@@ -155,25 +156,26 @@ export default {
         this.show1 = false;
         this.fieldValue1 = selectedOptions.map((option2) => option2.text).join('/');
         },
-        getItemInfo(){
-        this.pid = this.$route.query.pid
-        this.axios
-        .get("/api/m_v1/goods/detailPromo/"+this.pid, {
-        })
-        .then((res) => {
-          this.itemInfo = res.data.productPromo;
-        })
     },
-    
+    computed:{
+        totalPrice(){
+            let p = 0;
+            this.itemList.map((item)=>{
+                p+=item.data.productPromo.price*item.data.proTotal
+            })
+            return p
+        }
     },
     mounted(){
-        this.itemNum = this.$route.query.itemNum;
-        this.getItemInfo();    
+        this.itemList = this.$store.state.cart;
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.blank{
+    width: 100%; height: 50px; 
+}
 .order{
     width: 100%; 
 }
