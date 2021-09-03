@@ -12,36 +12,36 @@
     <footer-bar></footer-bar>
     <swiper></swiper>
     <div class="nav">
-      <div class="class-box">
+      <div class="class-box" @click="toCate('白酒')">
         <img src="../../public/img/item1.jpg" alt="" />
       </div>
-      <div class="class-box">
+      <div class="class-box" @click="toCate('葡萄酒')">
         <img src="../../public/img/item2.jpg" alt="" />
       </div>
-      <div class="class-box">
+      <div class="class-box" @click="toCate('洋酒')">
         <img src="../../public/img/item3.jpg" alt="" />
       </div>
-      <div class="class-box">
+      <div class="class-box" @click="toCate('啤酒')">
         <img src="../../public/img/item4.jpg" alt="" />
       </div>
-      <div class="class-box">
+      <a class="class-box" href="https://m.jiuxian.com/mobile/2018/GJMJC/?from=singlemessage&isappinstalled=0">
         <img src="../../public/img/item5.jpg" alt="" />
-      </div>
-      <div class="class-box">
+      </a>
+      <a class="class-box" href="https://mmember.jiuxian.com/live/6493">
         <img src="../../public/img/item6.gif" alt="" />
-      </div>
-      <div class="class-box">
+      </a>
+      <a class="class-box" href="https://shop.jiuxian.com/show/wap/act/viewShopActivity.htm?viewType=2&actId=5400">
         <img src="../../public/img/item7.jpg" alt="" />
-      </div>
-      <div class="class-box">
+      </a>
+      <a class="class-box" href="https://jc.jiuxian.com/">
         <img src="../../public/img/item8.gif" alt="" />
-      </div>
-      <div class="class-box">
+      </a>
+      <a class="class-box" href="https://pintuan.jiuxian.com/">
         <img src="../../public/img/item9.jpg" alt="" />
-      </div>
-      <div class="class-box">
+      </a>
+      <a class="class-box" href="https://shop.jiuxian.com/show/wap/act/viewShopActivity.htm?viewType=1&actId=5305&t=1630504424323">
         <img src="../../public/img/item10.jpg" alt="" />
-      </div>
+      </a>
     </div>
     <div class="banner-box">
       <img src="../../public/img/pic01.jpg" alt="" />
@@ -83,7 +83,7 @@
           </template>
         </van-count-down>
       </span>
-      <p class="more">更多商品等你来抢!<van-icon name="chat-o" /></p>
+      <p class="more">更多商品等你来抢!</p>
     </div>
     <div class="crossItem">
       <!-- <div
@@ -476,6 +476,12 @@ export default {
     },
     toSearch(){
       this.$router.push('/type');
+    },
+    toCate(cate){
+      this.$router.push({
+        path: '/cate',
+          query: {cate}
+      });
     },
     pageScroll(){
       this.scroll = document.documentElement.scrollTop || document.body.scrollTop;

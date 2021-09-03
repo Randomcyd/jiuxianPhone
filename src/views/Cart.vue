@@ -5,7 +5,7 @@
             <van-icon name="cart" />
             <h5>购物车还是空的</h5>
             <p>快去逛逛吧~</p>
-            <a>促销活动</a>
+            <a @click="toHome()">促销活动</a>
         </div>
         <div class="item-wrap">
             <div class="item-box" v-for="item,index in cart" :key="index">  
@@ -89,6 +89,9 @@ export default {
             this.$store.state.cart.splice(index,1);
             this.$store.state.cartNum-=1;
             this.getItemTotal();
+        },
+        toHome(){
+            this.$router.push("/");
         }
     },
     mounted(){

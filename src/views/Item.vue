@@ -23,7 +23,7 @@
             <div class="buy-info">
                 <div class="number">
                     <p>数量</p>
-                    <van-stepper v-model="value" />
+                    <van-stepper v-model="itemNum" />
                 </div>
                 <div class="address">
                     <p>送至</p>
@@ -87,7 +87,7 @@
 
         </div>
         <div class="blank" style="height:45px"></div>
-        <footer-buy></footer-buy>
+        <footer-buy>{{itemNum}}</footer-buy>
     </div>
 </template>
 
@@ -98,7 +98,7 @@ import footerBuy from "../components/FooterBuy.vue";
 export default {
     data(){
         return {
-            value:1,
+            itemNum:1,
             pid:null,
             itemInfo:null,
             spcActive:0,

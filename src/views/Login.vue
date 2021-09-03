@@ -42,7 +42,7 @@
                     </van-field>
                 </van-cell-group>
             </div>
-            <div class="login-btn">
+            <div class="login-btn" @click="login()">
                 立即登录
             </div>
             <div class="tabs">
@@ -72,6 +72,18 @@ export default {
     methods:{
         toggleType(index){
             this.typeActive = index;
+        },
+        login(){
+            this.axios
+            .post("/api1/user/ajax",{
+                user_name:this.username,
+                password:this.password,
+                t:new Date(),
+                verify_reg:0
+            })
+            .then((res) => {
+            console.log(res);
+            });
         }
     }
 }

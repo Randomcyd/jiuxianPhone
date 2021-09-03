@@ -4,7 +4,7 @@
         <a class="collect"><van-icon name="like" /><p>收藏</p></a>
         <a class="cart" @click="toCart()"><van-icon name="cart" v-if="cartNum!=0" :badge="cartNum"/><van-icon v-if="cartNum==0" name="cart"/><p>购物车</p></a>
         <a class="add-cart" @click="addCartAction()">加入购物车</a>
-        <a class="buy">立即购买</a>
+        <a class="buy" @click="toOrder()">立即购买</a>
     </div>
 </template>
 <script>
@@ -15,7 +15,8 @@ Vue.use(Toast);
 export default {
     data(){
         return{
-            
+            itemNum:'',
+            pid:''
         }
     },
     computed:Vuex.mapState(['cartNum']),
@@ -32,7 +33,20 @@ export default {
         },
         toCart(){
             this.$router.push('/cart');
+        },
+        toOrder(){
+            this.$router.push({
+                path:'/order',
+                query:{
+                    itemNum:this.itemNum,
+                    pid:this.pid
+                }
+            });
         }
+    },
+    mounted(){  
+        this.itemNum = this.$slots.default[0].text;
+        this.pid = this.$route.query.pid;
     }
 }
 </script>

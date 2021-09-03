@@ -6,8 +6,15 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '/api': ''
-        }
-      }
+        },
+      },
+      // '/api1': {
+      //   target: 'https://mlogin.jiuxian.com',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '/api1': ''
+      //   },
+      // },
     }
   },
   lintOnSave: false,

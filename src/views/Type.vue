@@ -4,18 +4,18 @@
         <div class="type-wrap">
             <van-search v-model="value" placeholder="人头马大牌日  领券满399减50" shape="round"/>
             <div class="type-grid">
-                <div class="type-item">白酒</div>
-                <div class="type-item">葡萄酒</div>
-                <div class="type-item">洋酒</div>
-                <div class="type-item">整箱购</div>
-                <div class="type-item">老酒</div>
-                <div class="type-item">清仓特卖</div>
-                <div class="type-item">海外直采</div>
-                <div class="type-item">精美大坛</div>
-                <div class="type-item">红酒整箱</div>
-                <div class="type-item">值得买</div>
-                <div class="type-item">销量排行</div>
-                <div class="type-item">礼尚往来</div>
+                <div class="type-item" @click="toCate('白酒')">白酒</div>
+                <div class="type-item" @click="toCate('葡萄酒')">葡萄酒</div>
+                <div class="type-item" @click="toCate('洋酒')">洋酒</div>
+                <div class="type-item" @click="toCate('整箱购')">整箱购</div>
+                <div class="type-item" @click="toCate('老酒')">老酒</div>
+                <div class="type-item" @click="toCate('清仓特卖')">清仓特卖</div>
+                <div class="type-item" @click="toCate('海外直采')">海外直采</div>
+                <div class="type-item" @click="toCate('精美大坛')">精美大坛</div>
+                <div class="type-item" @click="toCate('红酒整箱')">红酒整箱</div>
+                <div class="type-item" @click="toCate('值得买')">值得买</div>
+                <div class="type-item" @click="toCate('销量排行')">销量排行</div>
+                <div class="type-item" @click="toCate('礼尚往来')">礼尚往来</div>
             </div>
         </div>
     </div>
@@ -32,6 +32,14 @@ export default {
     components:{
         topTitle
     },
+    methods:{
+        toCate(cate){
+        this.$router.push({
+            path: '/cate',
+            query: {cate}
+        });
+    },
+    }
 }
 </script>
 

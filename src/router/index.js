@@ -5,6 +5,8 @@ import Item from '../views/Item.vue';
 import Cart from '../views/Cart.vue';
 import Type from '../views/Type.vue';
 import Login from '../views/Login.vue';
+import Cate from '../views/Cate.vue';
+import Order from '../views/Order.vue'
 
 Vue.use(VueRouter);
 
@@ -33,6 +35,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/cate',
+    name: 'Cate',
+    component: Cate,
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order,
   },
 ];
 
