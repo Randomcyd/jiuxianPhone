@@ -1,6 +1,6 @@
 <template>
-    <div id="download">
-            <i class="delete"></i>
+    <div id="download" v-if="showIndex">
+            <i class="delete" @click="close()" ></i>
             <i class="logo"></i>
             <h5><p>打开酒仙网APP</p><p>新人领198元礼包</p></h5>
             <a href="" class="open">立即打开</a>
@@ -12,7 +12,16 @@ import Vue from 'vue';
 import { Icon } from 'vant';
 Vue.use(Icon);
 export default {
-    
+    data(){
+        return {
+            showIndex:true 
+        }
+    },
+    methods:{
+        close(){
+            this.showIndex=false
+        }
+    }
 }
 </script>
 

@@ -27,7 +27,7 @@
                 <div class="payWay">
                     <p class="payTitle">支付方式</p>
                     <div class="payTab">
-                        <input type="radio" name="pay" value="在线付款" />在线付款
+                        <input type="radio" name="pay" value="在线付款" checked/>在线付款
                         <input type="radio" name="pay" value="货到付款" />货到付款
                     </div>
                 </div>
@@ -103,7 +103,7 @@
 export default {
     data(){
         return {
-            itemNum:null,
+            itemNum:'',
             itemList:[],
             pid:'',
             itemInfo:'',

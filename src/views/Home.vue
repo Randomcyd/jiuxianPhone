@@ -379,7 +379,7 @@ import swiper from "../components/Swiper.vue";
 export default {
   data() {
     return {
-      time: null,
+      time: '',
       crossItemList: [],
       itemList:[],
       searchValue:'',

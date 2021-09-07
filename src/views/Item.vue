@@ -99,8 +99,8 @@ export default {
     data(){
         return {
             itemNum:1,
-            pid:null,
-            itemInfo:null,
+            pid:'',
+            itemInfo:'',
             spcActive:0,
             show: false,
             fieldValue: '',
